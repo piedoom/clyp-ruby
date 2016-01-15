@@ -1,3 +1,3 @@
-module Clypit
+module Clyp
   VERSION = "0.1.0"
 end

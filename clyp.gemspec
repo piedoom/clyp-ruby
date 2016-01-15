@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'clypit/version'
+require 'clyp/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "clypit"
-  spec.version       = Clypit::VERSION
+  spec.name          = "clyp"
+  spec.version       = Clyp::VERSION
   spec.authors       = ["doomy"]
   spec.email         = ["alexanderpaullozada@gmail.com"]
 
