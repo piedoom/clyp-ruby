@@ -1,6 +1,6 @@
 # Clyp
 
-Clyp is an unofficial API wrapper for the audio sharing website http://clyp.it  With this gem, you can view, search, and upload your own files.
+clyp-ruby is an unofficial API wrapper for the audio sharing website http://clyp.it  With this gem, you can view, search, and upload your own files.
 
 
 ## Installation
@@ -43,7 +43,8 @@ client = Clyp::Client.new
 # Finally, Pass in your `TrackUpload` object
 my_upload = client.upload(track)
 
-# The upload function will return a `TrackUser` object.  For instance, to access the new `url`, perform the following
+# The upload function will return a `TrackUser` object.
+# For instance, to access the new `url`, perform the following
 puts my_upload.url
 
 >> https://clyp.it/qvneogei
@@ -104,7 +105,7 @@ client = Clyp::Client.new
 
 `View:`
 
-```ruby
+```irb
 Song Title: <%= @track.title %> <br>
 <% link_to @track.url_secure_mp3 do %>
  Link to MP3
@@ -121,7 +122,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/piedoom/clyp/fork )
+1. Fork it ( https://github.com/piedoom/clyp-ruby/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
