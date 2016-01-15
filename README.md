@@ -12,37 +12,50 @@ gem 'clyp'
 ```
 
 And then execute:
-
-    $ bundle
+```ruby
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install clyp
+```ruby
+$ gem install clyp
+```
 
 ## Usage
 
 To use the `clyp` gem, include this in your files
 
-    require `clyp`
+```ruby
+require 'clyp'
+```
 
 ### Uploading a file
 
 First, create a `TrackUpload` object, and set the parameters to your liking.
 
-    track = Clyp::TrackUpload.new(file: File.new('../test/files/sample.mp3'), title: 'Test', description: '#cool test')
+```ruby
+track = Clyp::TrackUpload.new(file: File.new('../test/files/sample.mp3'), title: 'Test', description: '#cool test')
+```
 
 Create a client object to manage the API.
 
-    client = Clyp::Client.new
+```ruby
+client = Clyp::Client.new
+```
 
 Finally, Pass in your `TrackUpload` object
 
-    my_upload = client.upload(track)
+```ruby
+my_upload = client.upload(track)
+```
 
 The upload function will return a `TrackUser` object.  For instance, to access the new `url`, perform the following
 
-    my_upload.url
-    >> https://clyp.it/qvneogei
+```ruby
+my_upload.url
+>> https://clyp.it/qvneogei
+```
 
 You can also access direct MP3 links, the date uploaded, and more.
 
@@ -51,23 +64,60 @@ You can also access direct MP3 links, the date uploaded, and more.
 
 Search for tracks:
 
-    client = Clyp::Client.new
-    client.search 'guitar'
+```ruby
+client = Clyp::Client.new
+client.search 'guitar'
+```
 
 Get random tracks:
 
-    client = Clyp::Client.new
-    client.random(count: 5)
+```ruby
+client = Clyp::Client.new
+client.random(count: 5)
+```
 
 Get popular tracks:
 
-    client = Clyp::Client.new
-    client.popular(count: 3)
+```ruby
+client = Clyp::Client.new
+client.popular(count: 3)
+```
 
 Chain functions:
 
-    client = Clyp::Client.new
-    client.get(id: client.search('piano').first.id)
+```ruby
+client = Clyp::Client.new
+client.get(id: client.search('piano').first.id)
+```
+
+Get a random track and get the link to it's HTTPS mp3
+
+```ruby
+client = Clyp::Client.new
+track = client.random(count: 1).first
+puts track.url_secure_mp3
+```
+
+Use `clyp` in a Rails view
+
+`Controller:`
+
+```ruby
+...
+client = Clyp::Client.new
+# get a specific track
+@track = client.get(id: 'qvneogei')
+...
+```
+
+`View:`
+
+```ruby
+Song Title: <%= @track.title %> <br>
+<% link_to @track.url_secure_mp3 do %>
+ Link to MP3
+<% end %>
+```
 
 There are more functions available in the documentation.
 
