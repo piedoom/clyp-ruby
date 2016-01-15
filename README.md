@@ -32,9 +32,9 @@ require 'clyp'
 
 ### Uploading a file
 
-First, create a `TrackUpload` object, and set the parameters to your liking.
-
 ```ruby
+
+#First, create a `TrackUpload` object, and set the parameters to your liking.
 track = Clyp::TrackUpload.new(file: File.new('../test/files/sample.mp3'), title: 'Test', description: '#cool test')
 
 # Create a client object to manage the API.
