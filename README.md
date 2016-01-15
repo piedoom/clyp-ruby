@@ -36,24 +36,16 @@ First, create a `TrackUpload` object, and set the parameters to your liking.
 
 ```ruby
 track = Clyp::TrackUpload.new(file: File.new('../test/files/sample.mp3'), title: 'Test', description: '#cool test')
-```
 
-Create a client object to manage the API.
-
-```ruby
+# Create a client object to manage the API.
 client = Clyp::Client.new
-```
 
-Finally, Pass in your `TrackUpload` object
-
-```ruby
+# Finally, Pass in your `TrackUpload` object
 my_upload = client.upload(track)
-```
 
-The upload function will return a `TrackUser` object.  For instance, to access the new `url`, perform the following
+# The upload function will return a `TrackUser` object.  For instance, to access the new `url`, perform the following
+puts my_upload.url
 
-```ruby
-my_upload.url
 >> https://clyp.it/qvneogei
 ```
 
