@@ -1,19 +1,21 @@
 require 'json'
+require 'rest-client'
 API_BASE = "https://api.clyp.it"
 UPLOAD_BASE = "https://upload.clyp.it/upload"
 
 module Clyp
   class Client
-    # uploads a TrackUpload object
+    # uploads a TrackUpload object, returns a TrackUser object
     def upload track
-      conn = Faraday.new(UPLOAD_BASE) do |f|
-        f.request :multipart
-        f.request :url_encoded
-        f.adapter :net_http
+      if track.playlist_id and track.playlist_token
+        response = JSON.parse(RestClient.post(UPLOAD_BASE, audioFile: track.file, title: track.title, playlistId: track.playlist_id,
+                  playlistUploadToken: track.playlist_token, order: track.order, description: track.description,
+                  longitude: track.longitude, latitude: track.latitude))
+      else
+        response = JSON.parse(RestClient.post(UPLOAD_BASE, audioFile: track.file, title: track.title,
+                  order: track.order, description: track.description, longitude: track.longitude, latitude: track.latitude))
       end
-      payload = { file: Faraday::UploadIO.new(track.file, 'audio')}
-      conn.post('/', { audioFile: payload, plalistId: track.playlist_id, playlistUploadToken: track.playlist_token,
-      order: track.order, description: track.description, longitude: track.longitude, latitude: track.latitude})
+      TrackUser.new(response)
     end
 
     # get song with specific id
@@ -45,55 +47,35 @@ module Clyp
     def search term
       response = Faraday.get("#{API_BASE}/categorylist/#{term}")
       attributes = JSON.parse(response.body)
-      result = Array.new
-      attributes.each do |attrs|
-        result << Track.new(attrs)
-      end
-      result
+      assemble_tracks attributes
     end
 
     # returns featured tracks in an array of Track objects
     def featured (count: 10)
       response = Faraday.get("#{API_BASE}/featuredlist/featured?count=#{count}")
       attributes = JSON.parse(response.body)
-      result = Array.new
-      attributes.each do |attrs|
-        result << Track.new(attrs)
-      end
-      result
+      assemble_tracks attributes
     end
 
     # returns popular tracks in an array of Track objects
     def popular (count: 10)
       response = Faraday.get("#{API_BASE}/featuredlist/popular?count=#{count}")
       attributes = JSON.parse(response.body)
-      result = Array.new
-      attributes.each do |attrs|
-        result << Track.new(attrs)
-      end
-      result
+      assemble_tracks attributes
     end
 
     # returns random tracks in an array of Track objects
     def random (count: 10)
       response = Faraday.get("#{API_BASE}/featuredlist/random?count=#{count}")
       attributes = JSON.parse(response.body)
-      result = Array.new
-      attributes.each do |attrs|
-        result << Track.new(attrs)
-      end
-      result
+      assemble_tracks attributes
     end
 
     # returns recent tracks in an array of Track objects
     def recent (count: 10)
       response = Faraday.get("#{API_BASE}/featuredlist/recent?count=#{count}")
       attributes = JSON.parse(response.body)
-      result = Array.new
-      attributes.each do |attrs|
-        result << Track.new(attrs)
-      end
-      result
+      assemble_tracks attributes
     end
 
     # TODO:
@@ -106,6 +88,12 @@ module Clyp
     def featured_nearby (count: 10, longitude: 0, latitude: 0)
       response = Faraday.get("#{API_BASE}/featuredlist/nearby?count=#{count}&longitude=#{longitude}&latitude=#{latitude}")
       attributes = JSON.parse(response.body)
+      assemble_tracks attributes
+    end
+
+    private
+
+    def assemble_tracks attributes
       result = Array.new
       attributes.each do |attrs|
         result << Track.new(attrs)

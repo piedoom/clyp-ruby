@@ -21,9 +21,55 @@ Or install it yourself as:
 
 ## Usage
 
+To use the `clyp` gem, include this in your files
+
+    require `clyp`
+
 ### Uploading a file
 
-First, create a `TrackUpload` object.
+First, create a `TrackUpload` object, and set the parameters to your liking.
+
+    track = Clyp::TrackUpload.new(file: File.new('../test/files/sample.mp3'), title: 'Test', description: '#cool test')
+
+Create a client object to manage the API.
+
+    client = Clyp::Client.new
+
+Finally, Pass in your `TrackUpload` object
+
+    my_upload = client.upload(track)
+
+The upload function will return a `TrackUser` object.  For instance, to access the new `url`, perform the following
+
+    my_upload.url
+    >> https://clyp.it/qvneogei
+
+You can also access direct MP3 links, the date uploaded, and more.
+
+
+### More API functions
+
+Search for tracks:
+
+    client = Clyp::Client.new
+    client.search 'guitar'
+
+Get random tracks:
+
+    client = Clyp::Client.new
+    client.random(count: 5)
+
+Get popular tracks:
+
+    client = Clyp::Client.new
+    client.popular(count: 3)
+
+Chain functions:
+
+    client = Clyp::Client.new
+    client.get(id: client.search('piano').first.id)
+
+There are more functions available in the documentation.
 
 ## Development
 
