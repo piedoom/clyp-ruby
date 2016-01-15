@@ -5,6 +5,6 @@ require 'clyp/models/soundwave'
 require 'clyp/models/list_item'
 require 'faraday'
 
-module Clypit
+module Clyp
 
 end

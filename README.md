@@ -1,8 +1,7 @@
 # Clyp
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/clypit`. To experiment with that code, run `bin/console` for an interactive prompt.
+Clyp is an unofficial API wrapper for the audio sharing website http://clyp.it  With this gem, you can view, search, and upload your own files.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -22,7 +21,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Uploading a file
+
+First, create a `TrackUpload` object.
 
 ## Development
 
@@ -32,7 +33,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/clyp/fork )
+1. Fork it ( https://github.com/piedoom/clyp/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

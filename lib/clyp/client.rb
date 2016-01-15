@@ -4,14 +4,16 @@ UPLOAD_BASE = "https://upload.clyp.it/upload"
 
 module Clyp
   class Client
-    def upload (file: )
+    # uploads a TrackUpload object
+    def upload track
       conn = Faraday.new(UPLOAD_BASE) do |f|
         f.request :multipart
         f.request :url_encoded
         f.adapter :net_http
       end
-      payload = { file: Faraday::UploadIO.new(file, 'audio')}
-      conn.post('/', payload)
+      payload = { file: Faraday::UploadIO.new(track.file, 'audio')}
+      conn.post('/', { audioFile: payload, plalistId: track.playlist_id, playlistUploadToken: track.playlist_token,
+      order: track.order, description: track.description, longitude: track.longitude, latitude: track.latitude})
     end
 
     # get song with specific id
